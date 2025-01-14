@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Recommendation System</title>
+</head>
+<body>
+    <h1>Recommendation System</h1>
+    <form method="POST" action="/predict">
+        <label for="tags">Tags:</label>
+        <input type="text" id="tags" name="tags" placeholder="luxury, adventure"><br>
+
+        <label for="category">Category:</label>
+        <input type="text" id="category" name="category" placeholder="hotel, restaurant"><br>
+
+        <label for="cuisine_type">Cuisine Type:</label>
+        <input type="text" id="cuisine_type" name="cuisine_type" placeholder="Indian, French"><br>
+
+        <label for="amenities">Amenities:</label>
+        <input type="text" id="amenities" name="amenities" placeholder="Free WiFi, Parking"><br>
+
+        <label for="wheelchair">Wheelchair Accessible:</label>
+        <select id="wheelchair" name="wheelchair">
+            <option value="no">No</option>
+            <option value="yes">Yes</option>
+        </select><br>
+
+        <label for="rating">Minimum Rating:</label>
+        <input type="number" id="rating" name="rating" step="0.1" placeholder="4.0"><br>
+
+        <button type="submit">Get Recommendations</button>
+    </form>
+
+    {% if recommendations %}
+        <h2>Top Recommendations</h2>
+        <table border="1">
+            <tr>
+                <th>Name</th>
+                <th>Category</th>
+                <th>Rating</th>
+                <th>Address</th>
+                <th>Image</th>
+                <th>Latitude</th>
+                <th>Longitude</th>
+                <th>URL</th>
+                <th>Popularity Score</th>
+            </tr>
+            {% for rec in recommendations %}
+                <tr>
+                    <td>{{ rec.name }}</td>
+                    <td>{{ rec.category }}</td>
+                    <td>{{ rec.rating }}</td>
+                    <td>{{ rec.address }}</td>
+                    <td><img src="{{ rec.imageUrls }}" alt="Image" width="100"></td>
+                    <td>{{ rec.latitude }}</td>
+                    <td>{{ rec.longitude }}</td>
+                    <td><a href="{{ rec.url }}" target="_blank">Visit</a></td>
+                    <td>{{ rec.popularity_score }}</td>
+                </tr>
+            {% endfor %}
+        </table>
+    {% endif %}
+</body>
+</html>
